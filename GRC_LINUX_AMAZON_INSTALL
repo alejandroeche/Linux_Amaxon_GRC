@@ -1,0 +1,49 @@
+sudo yum install python3
+
+sudo yum install python3-pip
+
+sudo yum install postgresql postgresql-server postgresql-devel postgresql-contrib postgresql-docs -y
+[Confirm the installation and accept the key]
+sudo service postgresql initdb
+sudo vim /var/lib/pgsql/data/pg_hba.conf
+
+
+
+sudo yum install python3-psycopg2
+sudo su - postgres
+psql
+CREATE DATABASE envelop;
+CREATE USER myprojectuser WITH PASSWORD 'password';
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE envelop TO myprojectuser;
+\q
+
+
+sudo pip3 install -r /path/to/folder/requirements.txt
+
+
+#    Initialising
+#    
+#    
+#    Create the data tables in the database
+
+sudo python3 manage.py makemigrations
+sudo python3 manage.py migrate
+
+#   Create the superuser to login initially
+
+sudo python3 manage.py createsuperuser
+
+#   Start the Envelop application
+
+    python3 manage.py runserver
+
+#    Point your web browser to http://127.0.0.1:8000 and login using the superuser credentials
+
+#    If you’d like to load some initial data
+
+sudo python3 manage.py loaddata audits/fixtures/initial_data.json
+
+
